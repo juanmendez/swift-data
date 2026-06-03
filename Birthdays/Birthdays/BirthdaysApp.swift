@@ -5,8 +5,8 @@
 //  Created by Mendez, Juan on 6/1/26.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 @main
 struct BirthdaysApp: App {
@@ -17,4 +17,3 @@ struct BirthdaysApp: App {
         }
     }
 }
-

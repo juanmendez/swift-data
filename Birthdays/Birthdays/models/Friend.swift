@@ -17,4 +17,11 @@ class Friend {
         self.name = name
         self.birthday = birthday
     }
+
+    var isHavingBirthdayToday: Bool {
+        let calendar = Calendar.current
+        let now = calendar.dateComponents([.day, .month], from: .now)
+        let then = calendar.dateComponents([.day, .month], from: birthday)
+        return now.month == then.month && now.day == then.day
+    }
 }
