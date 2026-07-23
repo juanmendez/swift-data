@@ -8,13 +8,11 @@
 import SwiftData
 import SwiftUI
 
-let greatRatingsPredicate = #Predicate<RatingModel> { $0.rating >= 5 }
-let allRatingsPredicate = #Predicate<RatingModel> { _ in true }
-let sortStars = SortDescriptor(\RatingModel.rating, order: .reverse)
-let sortNames = SortDescriptor(\RatingModel.pizzaName)
 struct RatingsListView: View {
+
+
     @Environment(\.modelContext) private var modelContext: ModelContext
-    @Query(filter: greatRatingsPredicate, sort: [sortNames, sortStars]) var ratings: [RatingModel]
+    @State var ratings: [RatingModel] = []
 
     @Binding var tabTag: Int
     @State private var isPresentingNewSheet: Bool = false
@@ -35,6 +33,17 @@ struct RatingsListView: View {
     }
 
     func fetchRatings() {
+        let greatRatingsPredicate = #Predicate<RatingModel> { $0.rating >= 5 }
+        let allRatingsPredicate = #Predicate<RatingModel> { _ in true }
+        let sortStars = SortDescriptor(\RatingModel.rating, order: .reverse)
+        let sortNames = SortDescriptor(\RatingModel.pizzaName)
+        let fetchDescriptor = FetchDescriptor(predicate: allRatingsPredicate, sortBy: [sortNames, sortStars])
+
+        do {
+            ratings = try modelContext.fetch(fetchDescriptor)
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 
     var pizzaImage: UIImage {
@@ -142,6 +151,8 @@ struct RatingsListView: View {
                         saveRating()
                         stars = 0
                         selectedPizzaName = ""
+
+                        fetchRatings()
                     }
                     .font(.title2)
                     .fontWeight(.heavy)
