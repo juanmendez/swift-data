@@ -8,9 +8,13 @@
 import SwiftData
 import SwiftUI
 
+let greatRatingsPredicate = #Predicate<RatingModel> { $0.rating >= 5 }
+let allRatingsPredicate = #Predicate<RatingModel> { _ in true }
+let sortStars = SortDescriptor(\RatingModel.rating, order: .reverse)
+let sortNames = SortDescriptor(\RatingModel.pizzaName)
 struct RatingsListView: View {
     @Environment(\.modelContext) private var modelContext: ModelContext
-    @Query var ratings: [RatingModel]
+    @Query(filter: greatRatingsPredicate, sort: [sortNames, sortStars]) var ratings: [RatingModel]
 
     @Binding var tabTag: Int
     @State private var isPresentingNewSheet: Bool = false
