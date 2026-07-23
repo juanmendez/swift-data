@@ -35,9 +35,16 @@ struct RatingsListView: View {
     func fetchRatings() {
         let greatRatingsPredicate = #Predicate<RatingModel> { $0.rating >= 5 }
         let allRatingsPredicate = #Predicate<RatingModel> { _ in true }
-        let sortStars = SortDescriptor(\RatingModel.rating, order: .reverse)
-        let sortNames = SortDescriptor(\RatingModel.pizzaName)
-        let fetchDescriptor = FetchDescriptor(predicate: allRatingsPredicate, sortBy: [sortNames, sortStars])
+
+        let order: SortOrder = isAcendingSort ? .forward : .reverse
+
+        let sortStars = SortDescriptor(\RatingModel.rating, order: order)
+        let sortNames = SortDescriptor(\RatingModel.pizzaName, order: order)
+
+        let predicate = isGreatRatings ? greatRatingsPredicate: allRatingsPredicate
+        let pizzaSort = isPizzaSort ? sortNames : sortStars
+
+        let fetchDescriptor = FetchDescriptor(predicate: predicate, sortBy: [pizzaSort])
 
         do {
             ratings = try modelContext.fetch(fetchDescriptor)
@@ -59,17 +66,20 @@ struct RatingsListView: View {
             HStack {
                 Button {
                     isPizzaSort.toggle()
+                    fetchRatings()
                 } label: {
                     Image(systemName: isPizzaSort ? "abc" : "list.star")
                 }
                 Button {
                     isAcendingSort.toggle()
+                    fetchRatings()
                 } label: {
                     Image(systemName: isAcendingSort ? "arrow.up.doc" : "arrow.down.doc")
                 }
                 Spacer()
                 Button {
                     isGreatRatings.toggle()
+                    fetchRatings()
                 } label: {
                     Image(systemName: isGreatRatings ? "heart.circle.fill" : "heart")
                 }
