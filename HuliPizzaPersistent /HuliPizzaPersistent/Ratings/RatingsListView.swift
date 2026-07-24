@@ -9,8 +9,6 @@ import SwiftData
 import SwiftUI
 
 struct RatingsListView: View {
-
-
     @Environment(\.modelContext) private var modelContext: ModelContext
     @State var ratings: [RatingModel] = []
 

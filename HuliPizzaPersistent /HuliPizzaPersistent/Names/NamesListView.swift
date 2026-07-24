@@ -10,7 +10,7 @@ import SwiftData
 
 struct NamesListView: View {
     @Environment(\.modelContext) private var modelContext: ModelContext
-    @Query var names: [NameModel]
+    @State private var names: [NameModel] = []
 
     @Binding var tabTag: Int
     @State private var entryName: String = ""
@@ -74,6 +74,12 @@ struct NamesListView: View {
                 }
             }
         }
+        .onAppear {
+            refreshNames()
+        }
+        .onChange(of: isSortingUp) {
+            refreshNames()
+        }
     }
 
     func addName() {
@@ -82,6 +88,19 @@ struct NamesListView: View {
         let newName = NameModel(name: newEntry, partySize: newPartySize)
         modelContext.insert(newName)
         entryName = ""
+        refreshNames()
+    }
+
+    private func refreshNames() {
+        let order: SortOrder = isSortingUp ? .forward : .reverse
+        let sortDescriptor = SortDescriptor(\NameModel.name, order: order)
+        let fetchDescriptor = FetchDescriptor(sortBy: [sortDescriptor])
+
+        do {
+            names = try modelContext.fetch(fetchDescriptor)
+        } catch {
+
+        }
     }
 }
 
