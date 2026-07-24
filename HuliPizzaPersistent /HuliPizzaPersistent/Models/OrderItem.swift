@@ -6,12 +6,22 @@
 //
 
 import Foundation
+import SwiftData
 
-@Observable
+@Model
 class OrderItem: Identifiable {
     var ticketKey: Int
     var rowKey: Int
-    var menuItem: MenuItem
+    var menuItemKey: Int = 0
+    var menuItem: MenuItem {
+        get {
+            MenuModel().menu.first { $0.id == menuItemKey}!
+        }
+
+        set {
+            menuItemKey = newValue.key
+        }
+    }
     var size: PizzaSize
     var quantity: Double
 
@@ -44,8 +54,8 @@ class OrderItem: Identifiable {
     ) {
         self.ticketKey = ticketKey
         self.rowKey = rowKey
-        self.menuItem = menuItem
         self.size = size
         self.quantity = quantity
+        self.menuItem = menuItem
     }
 }

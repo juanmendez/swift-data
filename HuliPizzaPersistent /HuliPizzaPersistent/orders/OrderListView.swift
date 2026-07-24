@@ -5,12 +5,15 @@
 //  Created by Steven Lipton on 10/13/23.
 //
 
+import SwiftData
 import SwiftUI
 
 struct OrderListView: View {
+    @Environment(\.modelContext) private var modelContext: ModelContext
+
     //model
     @Binding var ticketKey: Int
-    @Binding var orderItems: [OrderItem]
+    @Query var orderItems: [OrderItem]
     @State private var currentOrder = OrderItem()
 
     //navigation
@@ -45,11 +48,13 @@ struct OrderListView: View {
                             currentOrder = item
                         }
                 }
-                .onDelete(perform: { indexSet in
-                    for index in indexSet {
-                        orderItems.remove(at: index)
+                .onDelete(
+                    perform: { indexSet in
+                        for index in indexSet {
+                            modelContext.delete(orderItems[index])
+                        }
                     }
-                })
+                )
             }
             Button("Add Pizza") {
                 isAddPresented = true
@@ -80,7 +85,6 @@ struct OrderListView: View {
             //dismissal code here
         } content: {
             OrderAddView(
-                orders: $orderItems,
                 size: $currentOrder.size,
                 quantity: $currentOrder.quantity,
                 ticketKey: currentOrder.ticketKey,
@@ -104,5 +108,5 @@ struct OrderListView: View {
 )
 
 #Preview {
-    OrderListView(ticketKey: .constant(testTicket.ticketKey), orderItems: .constant(testTicket.items))
+    //    OrderListView(ticketKey: .constant(testTicket.ticketKey), orderItems: .constant(testTicket.items))
 }
