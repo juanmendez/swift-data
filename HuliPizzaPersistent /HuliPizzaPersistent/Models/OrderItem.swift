@@ -24,6 +24,9 @@ class OrderItem: Identifiable {
     }
     var size: PizzaSize
     var quantity: Double
+    
+    @Transient
+    var dateStamp: Date = Date()
 
     //Computed Properties and functions
     //The compute prices and extended prices

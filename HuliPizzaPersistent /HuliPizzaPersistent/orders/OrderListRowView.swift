@@ -38,6 +38,7 @@ struct OrderListRowView: View {
                 }
                 .font(.headline)
                 HStack {
+                    Text(orderItem.dateStamp, format: .iso8601.time(includingFractionalSeconds: false))
                     Spacer()
                     Text(orderItem.ticketKey, format: .number)
 
