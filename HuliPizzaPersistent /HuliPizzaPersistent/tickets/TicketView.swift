@@ -14,23 +14,27 @@ struct TicketView: View {
     @Binding var tabTag: Int
 
     //Model declarations
-    @Query private var tickets: [OrderTicket] = []
+    @Query(sort: [SortDescriptor(\OrderTicket.ticketKey)]) private var tickets: [OrderTicket] = []
     @State private var currentTicket: OrderTicket = OrderTicket()
 
-    @State private var ticketKey: Int = 1
+    @State private var ticketKey: Int = 0
     @State private var items: [OrderItem] = []
 
-    @State private var isListViewVisible: Bool = false
+    @State private var isListViewVisible: Bool = true
     @State private var deleteTicketSets: IndexSet = []
 
     //Computed properties
 
     private var keyList: [Int] {
-        tickets.map { $0.ticketKey }.sorted()
+        tickets.map { $0.ticketKey }
     }
 
     private var maxKey: Int {
         keyList.max() ?? -1
+    }
+
+    private var nextKey: Int {
+        maxKey + 1
     }
 
     var body: some View {
@@ -86,7 +90,11 @@ struct TicketView: View {
 
             Spacer()
         }
-
+        .onAppear {
+            ticketKey = nextKey
+        }.onChange(of: tickets.count) {
+            ticketKey = nextKey
+        }
     }
 
     func saveTicket() {
@@ -98,7 +106,7 @@ struct TicketView: View {
         } else {
             currentTicket.items = items
         }
-        ticketKey = maxKey + 1
+        ticketKey = nextKey
         items = []
 
     }
