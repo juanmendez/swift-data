@@ -22,11 +22,13 @@ struct RatingsListView: View {
     @State private var isPizzaSort = true
     @State private var isGreatRatings = false
     @State private var isAcendingSort = true
+    @State private var ratingIcon: RatingsIcon = .star
 
     func saveRating() {
         let newName = selectedPizzaName
         let newStars = stars
-        let newRating = RatingModel(pizzaName: newName, rating: newStars)
+        let newRatingIcon = ratingIcon
+        let newRating = RatingModel(pizzaName: newName, rating: newStars, ratingIcon: newRatingIcon)
         modelContext.insert(newRating)
     }
 
@@ -96,7 +98,7 @@ struct RatingsListView: View {
                     RatingRowView(
                         pizzaName: rating.pizzaName,
                         rating: rating.rating,
-                        systemName: RatingsIcon.star.rawValue
+                        systemName: rating.ratingIcon.rawValue
                     )
                 }
                 .onDelete { indexSet in
@@ -119,7 +121,7 @@ struct RatingsListView: View {
                         .padding()
                     HStack {
                         Spacer()
-                        Picker("Symbol", selection: .constant(RatingsIcon.star)) {
+                        Picker("Symbol", selection: $ratingIcon) {
                             ForEach(RatingsIcon.allCases, id: \.self) { icon in
                                 Image(systemName: icon.rawValue + ".fill").tag(icon)
                             }
@@ -142,7 +144,7 @@ struct RatingsListView: View {
                         ForEach(1...6, id: \.self) { ratingStar in
                             Image(
                                 systemName: stars >= ratingStar
-                                    ? (RatingsIcon.star.rawValue + ".fill") : RatingsIcon.star.rawValue
+                                ? (ratingIcon.rawValue + ".fill") : ratingIcon.rawValue
                             )
                             .font(.title)
                             .padding([.leading, .trailing], 4)
