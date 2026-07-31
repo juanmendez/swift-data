@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import SwiftData
 
-@Observable
+@Model
 class OrderTicket: Identifiable {
 
     //Model properties
@@ -29,5 +30,4 @@ class OrderTicket: Identifiable {
         self.items = items
         self.name = name
     }
-
 }

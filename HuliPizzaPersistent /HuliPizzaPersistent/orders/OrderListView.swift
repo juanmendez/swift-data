@@ -13,7 +13,8 @@ struct OrderListView: View {
 
     //model
     @Binding var ticketKey: Int
-    @Query var orderItems: [OrderItem]
+    // @Query var orderItems: [OrderItem]
+    @Binding var orderItems: [OrderItem]
     @State private var currentOrder = OrderItem()
 
     //navigation
@@ -51,7 +52,8 @@ struct OrderListView: View {
                 .onDelete(
                     perform: { indexSet in
                         for index in indexSet {
-                            modelContext.delete(orderItems[index])
+                            // modelContext.delete(orderItems[index])
+                            orderItems.remove(at: index)
                         }
                     }
                 )
@@ -84,7 +86,17 @@ struct OrderListView: View {
         .sheet(isPresented: $isAddPresented) {
             //dismissal code here
         } content: {
+//            OrderAddView(
+//                size: $currentOrder.size,
+//                quantity: $currentOrder.quantity,
+//                ticketKey: currentOrder.ticketKey,
+//                maxRowKey: maxKey,
+//                isPresented: $isAddPresented,
+//                tabTag: .constant(0)
+//            )
+//            .padding()
             OrderAddView(
+                orderItems: $orderItems,
                 size: $currentOrder.size,
                 quantity: $currentOrder.quantity,
                 ticketKey: currentOrder.ticketKey,

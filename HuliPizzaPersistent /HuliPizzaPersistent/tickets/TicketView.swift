@@ -5,20 +5,23 @@
 //  Created by Steven Lipton on 10/13/23.
 //
 
+import SwiftData
 import SwiftUI
 
 struct TicketView: View {
 
+    @Environment(\.modelContext) private var modelContext
     @Binding var tabTag: Int
 
     //Model declarations
-    @State private var tickets: [OrderTicket] = []
+    @Query private var tickets: [OrderTicket] = []
     @State private var currentTicket: OrderTicket = OrderTicket()
 
     @State private var ticketKey: Int = 1
     @State private var items: [OrderItem] = []
 
     @State private var isListViewVisible: Bool = false
+    @State private var deleteTicketSets: IndexSet = []
 
     //Computed properties
 
@@ -41,8 +44,19 @@ struct TicketView: View {
                     Image(systemName: isListViewVisible ? "chevron.down" : "chevron.up")
                 }
             }
-            TicketListView(ticketKey: $ticketKey, orderItems: $items, tickets: $tickets)
-                .frame(height: isListViewVisible ? nil : 0)
+            TicketListView(
+                ticketKey: $ticketKey,
+                orderItems: $items,
+                tickets: tickets,
+                deleteTicketSets: $deleteTicketSets
+            )
+            .frame(height: isListViewVisible ? nil : 0)
+            .onChange(of: deleteTicketSets) {
+                for index in deleteTicketSets {
+                    modelContext.delete(tickets[index])
+                }
+            }
+
             HStack {
                 Button(keyList.contains(ticketKey) ? "Save Ticket" : "Add Ticket") {
                     saveTicket()
@@ -68,7 +82,7 @@ struct TicketView: View {
             .font(.title).bold()
             .background(.sky, in: Capsule())
 
-            OrderListView(ticketKey: $ticketKey)
+            OrderListView(ticketKey: $ticketKey, orderItems: $items)
 
             Spacer()
         }
@@ -80,7 +94,7 @@ struct TicketView: View {
         let newItems = items
         let addedTicket = OrderTicket(ticketKey: newTicketKey, items: newItems)
         if !keyList.contains(where: { $0 == ticketKey }) {
-            tickets.append(addedTicket)
+            modelContext.insert(addedTicket)
         } else {
             currentTicket.items = items
         }
