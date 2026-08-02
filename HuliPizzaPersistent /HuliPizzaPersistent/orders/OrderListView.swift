@@ -43,7 +43,7 @@ struct OrderListView: View {
             }
             List {
                 ForEach(orderItems) { item in
-                    OrderListRowView(orderItem: item)
+                    OrderListRowView(ticketKey: ticketKey, orderItem: item)
                         .onTapGesture {
                             isEditPresented = true
                             currentOrder = item
@@ -86,20 +86,20 @@ struct OrderListView: View {
         .sheet(isPresented: $isAddPresented) {
             //dismissal code here
         } content: {
-//            OrderAddView(
-//                size: $currentOrder.size,
-//                quantity: $currentOrder.quantity,
-//                ticketKey: currentOrder.ticketKey,
-//                maxRowKey: maxKey,
-//                isPresented: $isAddPresented,
-//                tabTag: .constant(0)
-//            )
-//            .padding()
+            //            OrderAddView(
+            //                size: $currentOrder.size,
+            //                quantity: $currentOrder.quantity,
+            //                ticketKey: currentOrder.ticketKey,
+            //                maxRowKey: maxKey,
+            //                isPresented: $isAddPresented,
+            //                tabTag: .constant(0)
+            //            )
+            //            .padding()
             OrderAddView(
                 orderItems: $orderItems,
                 size: $currentOrder.size,
                 quantity: $currentOrder.quantity,
-                ticketKey: currentOrder.ticketKey,
+                ticketKey: ticketKey,
                 maxRowKey: maxKey,
                 isPresented: $isAddPresented,
                 tabTag: .constant(0)

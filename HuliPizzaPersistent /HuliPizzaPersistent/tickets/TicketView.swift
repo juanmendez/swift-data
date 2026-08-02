@@ -15,7 +15,6 @@ struct TicketView: View {
 
     //Model declarations
     @Query(sort: [SortDescriptor(\OrderTicket.ticketKey)]) private var tickets: [OrderTicket] = []
-    @State private var currentTicket: OrderTicket = OrderTicket()
 
     @State private var ticketKey: Int = 0
     @State private var items: [OrderItem] = []
@@ -80,7 +79,7 @@ struct TicketView: View {
                     Text("Press New ticket to begin")
                 }
                 Spacer()
-                Text(currentTicket.totalPrice, format: .currency(code: "USD"))
+                Text(tickets.totalPrice, format: .currency(code: "USD"))
             }
             .padding(20)
             .font(.title).bold()
@@ -100,13 +99,14 @@ struct TicketView: View {
     func saveTicket() {
         let newTicketKey = ticketKey
         let newItems = items
-        let addedTicket = OrderTicket(ticketKey: newTicketKey, items: newItems)
+
         if !keyList.contains(where: { $0 == ticketKey }) {
+            let addedTicket = OrderTicket(ticketKey: newTicketKey, items: newItems)
             modelContext.insert(addedTicket)
-        } else {
-            currentTicket.items = items
+        } else if let ticketIdex = tickets.firstIndex(where: { $0.ticketKey == ticketKey}){
+            tickets[ticketIdex].items = items
         }
-        ticketKey = nextKey
+
         items = []
 
     }

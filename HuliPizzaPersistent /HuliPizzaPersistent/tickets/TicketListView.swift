@@ -40,9 +40,9 @@ struct TicketListView: View {
                     }
                 }
                 .onDelete(perform: { indexSet in
-//                    for index in indexSet {
-//                        tickets.remove(at: index)
-//                    }
+                    //                    for index in indexSet {
+                    //                        tickets.remove(at: index)
+                    //                    }
                     deleteTicketSets = indexSet
                 })
             }

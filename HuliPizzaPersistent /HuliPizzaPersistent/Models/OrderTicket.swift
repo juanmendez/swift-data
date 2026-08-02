@@ -31,3 +31,11 @@ class OrderTicket: Identifiable {
         self.name = name
     }
 }
+
+extension Array where Element == OrderTicket {
+    var totalPrice: Double {
+        self.reduce(0.0) { partialResult, orderTicket in
+            partialResult + orderTicket.totalPrice
+        }
+    }
+}
