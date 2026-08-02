@@ -24,14 +24,6 @@ struct RatingsListView: View {
     @State private var isAcendingSort = true
     @State private var ratingIcon: RatingsIcon = .star
 
-    func saveRating() {
-        let newName = selectedPizzaName
-        let newStars = stars
-        let newRatingIcon = ratingIcon
-        let newRating = RatingModel(pizzaName: newName, rating: newStars, ratingIcon: newRatingIcon)
-        modelContext.insert(newRating)
-    }
-
     func fetchRatings() {
         let greatRatingsPredicate = #Predicate<RatingModel> { $0.rating >= 5 }
         let allRatingsPredicate = #Predicate<RatingModel> { _ in true }
@@ -51,6 +43,14 @@ struct RatingsListView: View {
         } catch {
             print(error.localizedDescription)
         }
+    }
+
+    func saveRating() {
+        let newName = selectedPizzaName
+        let newStars = stars
+        let newRatingIcon = ratingIcon
+        let newRating = RatingModel(pizzaName: newName, rating: newStars, ratingIcon: newRatingIcon)
+        modelContext.insert(newRating)
     }
 
     var pizzaImage: UIImage {

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct OrderListRowView: View {
+    let ticketKey: Int
     var orderItem: OrderItem
     var body: some View {
         HStack(alignment: .center) {
@@ -40,7 +41,7 @@ struct OrderListRowView: View {
                 HStack {
                     Text(orderItem.dateStamp, format: .iso8601.time(includingFractionalSeconds: false))
                     Spacer()
-                    Text(orderItem.ticketKey, format: .number)
+                    Text(ticketKey, format: .number)
 
                 }.font(.caption)
             }
@@ -50,6 +51,7 @@ struct OrderListRowView: View {
 
 #Preview {
     OrderListRowView(
+        ticketKey: 1,
         orderItem: OrderItem(ticketKey: 1, rowKey: 0, menuItem: MenuModel().menu[0], size: .small, quantity: 1)
     )
 }
