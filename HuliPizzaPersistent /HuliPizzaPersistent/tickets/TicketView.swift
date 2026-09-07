@@ -47,17 +47,22 @@ struct TicketView: View {
                     Image(systemName: isListViewVisible ? "chevron.down" : "chevron.up")
                 }
             }
-            TicketListView(
-                ticketKey: $ticketKey,
-                orderItems: $items,
-                tickets: tickets,
-                deleteTicketSets: $deleteTicketSets
-            )
-            .frame(height: isListViewVisible ? nil : 0)
-            .onChange(of: deleteTicketSets) {
-                for index in deleteTicketSets {
-                    modelContext.delete(tickets[index])
+
+            HStack {
+                TicketListView(
+                    ticketKey: $ticketKey,
+                    orderItems: $items,
+                    tickets: tickets,
+                    deleteTicketSets: $deleteTicketSets
+                )
+                .frame(height: isListViewVisible ? nil : 0)
+                .onChange(of: deleteTicketSets) {
+                    for index in deleteTicketSets {
+                        modelContext.delete(tickets[index])
+                    }
                 }
+
+                AllOrdersView()
             }
 
             HStack {
@@ -108,7 +113,6 @@ struct TicketView: View {
         }
 
         items = []
-
     }
 }
 

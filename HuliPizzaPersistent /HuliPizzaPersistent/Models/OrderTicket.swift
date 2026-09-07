@@ -13,6 +13,8 @@ class OrderTicket: Identifiable {
 
     //Model properties
     var ticketKey: Int
+
+    @Relationship(deleteRule: .cascade)
     var items: [OrderItem]
     var name: String
 
