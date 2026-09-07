@@ -10,8 +10,11 @@ import SwiftData
 
 @Model
 class NameModel: Identifiable {
+    @Attribute(.unique)
     var name: String
+
     var partySize: Int
+
     init(name: String, partySize: Int) {
         self.name = name
         self.partySize = partySize
