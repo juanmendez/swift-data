@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F2F73FC30649CFC002ECE0A /* PreviewModelConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2F73FB30649CFC002ECE0A /* PreviewModelConfiguration.swift */; };
 		5F9919CE304E70200046D884 /* AllOrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9919CD304E70200046D884 /* AllOrdersView.swift */; };
 		E1AF05CB2AEC138F002C0600 /* HuliPizzaPersistentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AF05CA2AEC138F002C0600 /* HuliPizzaPersistentApp.swift */; };
 		E1AF05CD2AEC138F002C0600 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AF05CC2AEC138F002C0600 /* ContentView.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F2F73FB30649CFC002ECE0A /* PreviewModelConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewModelConfiguration.swift; sourceTree = "<group>"; };
 		5F9919CD304E70200046D884 /* AllOrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllOrdersView.swift; sourceTree = "<group>"; };
 		E1AF05C72AEC138F002C0600 /* HuliPizzaPersistent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HuliPizzaPersistent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1AF05CA2AEC138F002C0600 /* HuliPizzaPersistentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HuliPizzaPersistentApp.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				E1AF05F92AEC13BB002C0600 /* OrderItem.swift */,
 				E1AF05F82AEC13BB002C0600 /* NameModel.swift */,
 				E1AF05F62AEC13BB002C0600 /* RatingModel.swift */,
+				5F2F73FB30649CFC002ECE0A /* PreviewModelConfiguration.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				E1AF06012AEC13BB002C0600 /* OrderEntryView.swift in Sources */,
 				E1AF05FC2AEC13BB002C0600 /* MenuItemRowView.swift in Sources */,
 				E1AF06112AEC13BB002C0600 /* MenuItem.swift in Sources */,
+				5F2F73FC30649CFC002ECE0A /* PreviewModelConfiguration.swift in Sources */,
 				E1AF060C2AEC13BB002C0600 /* RatingView.swift in Sources */,
 				E1AF06082AEC13BB002C0600 /* HeaderView.swift in Sources */,
 			);

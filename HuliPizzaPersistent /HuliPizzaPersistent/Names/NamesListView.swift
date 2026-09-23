@@ -108,4 +108,5 @@ struct NamesListView: View {
 
 #Preview {
     NamesListView(tabTag: .constant(3))
+        .modelContainer(previewNameContainer)
 }
