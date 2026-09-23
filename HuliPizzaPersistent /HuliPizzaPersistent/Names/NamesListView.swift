@@ -10,8 +10,8 @@ import SwiftData
 
 struct NamesListView: View {
     @Environment(\.modelContext) private var modelContext: ModelContext
-    //@State private var names: [NameModel] = []
-    @Query private var names: [NameModel] = []
+    @State private var names: [NameModel] = []
+    // @Query private var names: [NameModel] = []
 
     @Binding var tabTag: Int
     @State private var entryName: String = ""
@@ -88,6 +88,7 @@ struct NamesListView: View {
         let newPartySize = partySize
         let newName = NameModel(name: newEntry, partySize: newPartySize)
         modelContext.insert(newName)
+        try! modelContext.save()
         entryName = ""
         refreshNames()
     }
@@ -98,7 +99,7 @@ struct NamesListView: View {
         let fetchDescriptor = FetchDescriptor(sortBy: [sortDescriptor])
 
         do {
-            // names = try modelContext.fetch(fetchDescriptor)
+            names = try modelContext.fetch(fetchDescriptor)
         } catch {
 
         }

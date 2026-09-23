@@ -51,6 +51,7 @@ struct RatingsListView: View {
         let newRatingIcon = ratingIcon
         let newRating = RatingModel(pizzaName: newName, rating: newStars, ratingIcon: newRatingIcon)
         modelContext.insert(newRating)
+        try!modelContext.save()
     }
 
     var pizzaImage: UIImage {
@@ -104,6 +105,7 @@ struct RatingsListView: View {
                 .onDelete { indexSet in
                     for index in indexSet {
                         modelContext.delete(ratings[index])
+                        try! modelContext.save()
                     }
                 }
 

@@ -20,7 +20,8 @@ struct HuliPizzaPersistentApp: App {
                 NameModel.self,
                 OrderTicket.self,
                 OrderItem.self
-            ]
+            ],
+            isAutosaveEnabled: false
         )
     }
 }

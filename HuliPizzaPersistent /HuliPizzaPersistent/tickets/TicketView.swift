@@ -59,6 +59,7 @@ struct TicketView: View {
                 .onChange(of: deleteTicketSets) {
                     for index in deleteTicketSets {
                         modelContext.delete(tickets[index])
+                        try! modelContext.save()
                     }
                 }
 
@@ -66,6 +67,17 @@ struct TicketView: View {
             }
 
             HStack {
+                Button("Save") {
+                    try! modelContext.save()
+                }
+                .font(.title2)
+                .fontWeight(.heavy)
+                .foregroundColor(.white)
+                .padding([.top, .bottom])
+                .padding([.leading, .trailing], 30)
+                .background(.surf, in: RoundedRectangle(cornerRadius: 15))
+                .padding([.leading, .trailing, .top])
+
                 Button(keyList.contains(ticketKey) ? "Save Ticket" : "Add Ticket") {
                     saveTicket()
                 }
