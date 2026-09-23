@@ -36,6 +36,23 @@ struct TicketView: View {
         maxKey + 1
     }
 
+    private var noModelsPending: Bool {
+        let allArrays =
+            modelContext.insertedModelsArray + modelContext.changedModelsArray + modelContext.deletedModelsArray
+
+        return allArrays.isEmpty
+    }
+
+    private func modelArrays(message: String = "") {
+        if !message.isEmpty {
+            print(message)
+        }
+        print("Inserted", modelContext.insertedModelsArray)
+        print("Changed", modelContext.changedModelsArray)
+        print("Deleted", modelContext.deletedModelsArray)
+        print("\n\n")
+    }
+
     var body: some View {
         VStack {
             HStack {
@@ -59,7 +76,7 @@ struct TicketView: View {
                 .onChange(of: deleteTicketSets) {
                     for index in deleteTicketSets {
                         modelContext.delete(tickets[index])
-                        try! modelContext.save()
+                        // try! modelContext.save()
                     }
                 }
 
@@ -68,7 +85,23 @@ struct TicketView: View {
 
             HStack {
                 Button("Save") {
+                    modelArrays(message: "before saving ticket")
                     try! modelContext.save()
+                    modelArrays(message: "after saving ticket")
+                }
+                .font(.title2)
+                .fontWeight(.heavy)
+                .foregroundColor(.white)
+                .padding([.top, .bottom])
+                .padding([.leading, .trailing], 30)
+                .background(.surf, in: RoundedRectangle(cornerRadius: 15))
+                .padding([.leading, .trailing, .top])
+                .opacity(noModelsPending ? 0.5: 1.0)
+                .disabled(noModelsPending)
+
+                Button(keyList.contains(ticketKey) ? "Save Ticket" : "Add Ticket") {
+                    saveTicket()
+                    modelArrays(message: "Save Ticket")
                 }
                 .font(.title2)
                 .fontWeight(.heavy)
@@ -78,8 +111,10 @@ struct TicketView: View {
                 .background(.surf, in: RoundedRectangle(cornerRadius: 15))
                 .padding([.leading, .trailing, .top])
 
-                Button(keyList.contains(ticketKey) ? "Save Ticket" : "Add Ticket") {
-                    saveTicket()
+
+                Button("Undo") {
+                    modelContext.rollback()
+                    modelArrays(message: "After rolling back")
                 }
                 .font(.title2)
                 .fontWeight(.heavy)
@@ -88,6 +123,9 @@ struct TicketView: View {
                 .padding([.leading, .trailing], 30)
                 .background(.surf, in: RoundedRectangle(cornerRadius: 15))
                 .padding([.leading, .trailing, .top])
+                .opacity(noModelsPending ? 0.5: 1.0)
+                .disabled(noModelsPending)
+
                 Spacer()
                 if ticketKey >= 0 {
                     Text("Order #")
@@ -114,17 +152,19 @@ struct TicketView: View {
     }
 
     func saveTicket() {
+
         let newTicketKey = ticketKey
         let newItems = items
 
         if !keyList.contains(where: { $0 == ticketKey }) {
             let addedTicket = OrderTicket(ticketKey: newTicketKey, items: newItems)
             modelContext.insert(addedTicket)
-        } else if let ticketIdex = tickets.firstIndex(where: { $0.ticketKey == ticketKey}){
+        } else if let ticketIdex = tickets.firstIndex(where: { $0.ticketKey == ticketKey }) {
             tickets[ticketIdex].items = items
         }
 
         items = []
+        modelArrays(message: "add ticket")
     }
 }
 
