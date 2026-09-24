@@ -7,14 +7,31 @@
 
 import SwiftData
 
-let previewConfiguration = ModelConfiguration(isStoredInMemoryOnly: true)
+@MainActor
+let defaultPreviewNames = [
+    NameModel(name: "Ernesto", partySize: 10),
+    NameModel(name: "Carlos", partySize: 4)
+]
 
-let previewNameContainer = try! ModelContainer(
-    for: NameModel.self,
-    configurations: previewConfiguration
-)
+@MainActor
+func modelPreviewContainer(
+    autoSaveEnabled: Bool = true,
+    names: [NameModel] = defaultPreviewNames,
+) -> ModelContainer {
+    let schema = Schema(
+        [OrderTicket.self, NameModel.self, RatingModel.self, OrderItem.self,]
+    )
 
-let previewRatingContainer = try! ModelContainer(
-    for: RatingModel.self,
-    configurations: previewConfiguration
-)
+    let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: schema, configurations: configuration)
+    let context = ModelContext(container)
+    context.autosaveEnabled = autoSaveEnabled
+
+    for name in names {
+        context.insert(name)
+    }
+
+    try! context.save()
+
+    return container
+}

@@ -100,6 +100,7 @@ struct NamesListView: View {
 
         do {
             names = try modelContext.fetch(fetchDescriptor)
+            print("names \(names.count)")
         } catch {
 
         }
@@ -108,5 +109,5 @@ struct NamesListView: View {
 
 #Preview {
     NamesListView(tabTag: .constant(3))
-        .modelContainer(previewNameContainer)
+        .modelContainer(modelPreviewContainer())
 }
