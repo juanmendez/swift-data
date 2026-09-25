@@ -31,7 +31,7 @@ struct RatingsListView: View {
         let order: SortOrder = isAcendingSort ? .forward : .reverse
 
         let sortStars = SortDescriptor(\RatingModel.rating, order: order)
-        let sortNames = SortDescriptor(\RatingModel.pizzaName, order: order)
+        let sortNames = SortDescriptor(\RatingModel.menuItemName, order: order)
 
         let predicate = isGreatRatings ? greatRatingsPredicate: allRatingsPredicate
         let pizzaSort = isPizzaSort ? sortNames : sortStars
@@ -97,7 +97,7 @@ struct RatingsListView: View {
             List {
                 ForEach(ratings) { rating in
                     RatingRowView(
-                        pizzaName: rating.pizzaName,
+                        pizzaName: rating.menuItemName,
                         rating: rating.rating,
                         systemName: rating.ratingIcon.rawValue
                     )
