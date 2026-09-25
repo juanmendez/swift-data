@@ -8,32 +8,6 @@
 import Foundation
 import SwiftData
 
-@Model
-class OrderTicket: Identifiable {
-
-    //Model properties
-    var ticketKey: Int
-
-    @Relationship(deleteRule: .cascade)
-    var items: [OrderItem]
-    var name: String
-
-    //Computed Properties
-    var totalPrice: Double {
-        items.map { $0.extendedPrice }.reduce(0, +)
-    }
-    var totalPizzas: Int {
-        Int(items.map { $0.quantity }.reduce(0, +))
-    }
-
-    //Initializer with defaults to make a blank version as necessary
-    init(ticketKey: Int = -1, items: [OrderItem] = [], name: String = "") {
-        self.ticketKey = ticketKey
-        self.items = items
-        self.name = name
-    }
-}
-
 extension Array where Element == OrderTicket {
     var totalPrice: Double {
         self.reduce(0.0) { partialResult, orderTicket in
