@@ -22,6 +22,6 @@ struct MenuModel {
         MenuItem(key: 8, name: "Huli Chicken", basicPrice: 15, category: .originals, rating: 6),
         MenuItem(key: 9, name: "Hawaiian", basicPrice: 13, category: .originals, rating: 5),
         MenuItem(key: 10, name: "Spam Musubi", basicPrice: 13, category: .originals, rating: 3),
-        MenuItem(key: 11, name: "Veggie Musubi", basicPrice: 14, category: .originals, rating: 3),
+        MenuItem(key: 11, name: "Veggie Musubi", basicPrice: 14, category: .originals, rating: 3)
     ]
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-///Ratings icon constants
+/// Ratings icon constants
 enum RatingsIcon: String, CaseIterable, Codable {
     case star = "star"
     case plate = "fork.knife.circle"
@@ -23,7 +23,7 @@ enum PizzaSize: Int, CaseIterable, Codable {
     case large = 2
     case xlarge = 3
 
-    ///Text values for a size of a pizza
+    /// Text values for a size of a pizza
     var textValue: String {
         let textValues = ["Small", "Medium", "Large", "ExtraLarge"]
         return textValues[self.rawValue]

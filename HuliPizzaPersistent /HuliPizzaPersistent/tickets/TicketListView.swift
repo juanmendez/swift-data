@@ -10,7 +10,7 @@ import SwiftUI
 struct TicketListView: View {
     @Binding var ticketKey: Int
     @Binding var orderItems: [OrderItem]
-    //@Binding var tickets: [OrderTicket]
+    // @Binding var tickets: [OrderTicket]
     var tickets: [OrderTicket]
     @Binding var deleteTicketSets: IndexSet
     var body: some View {
@@ -51,7 +51,7 @@ struct TicketListView: View {
 }
 
 #Preview {
-    //TicketListView(ticketKey: .constant(1), orderItems: .constant(testTicket.items), tickets: .constant([testTicket]))
+    // TicketListView(ticketKey: .constant(1), orderItems: .constant(testTicket.items), tickets: .constant([testTicket]))
     TicketListView(
         ticketKey: .constant(1),
         orderItems: .constant(testTicket.items),

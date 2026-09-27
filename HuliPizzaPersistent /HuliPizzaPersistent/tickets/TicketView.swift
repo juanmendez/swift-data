@@ -13,7 +13,7 @@ struct TicketView: View {
     @Environment(\.modelContext) private var modelContext
     @Binding var tabTag: Int
 
-    //Model declarations
+    // Model declarations
     @Query(sort: [SortDescriptor(\OrderTicket.ticketKey)]) private var tickets: [OrderTicket] = []
 
     @State private var ticketKey: Int = 0
@@ -22,7 +22,7 @@ struct TicketView: View {
     @State private var isListViewVisible: Bool = true
     @State private var deleteTicketSets: IndexSet = []
 
-    //Computed properties
+    // Computed properties
 
     private var keyList: [Int] {
         tickets.map { $0.ticketKey }
@@ -110,7 +110,6 @@ struct TicketView: View {
                 .padding([.leading, .trailing], 30)
                 .background(.surf, in: RoundedRectangle(cornerRadius: 15))
                 .padding([.leading, .trailing, .top])
-
 
                 Button("Undo") {
                     modelContext.rollback()

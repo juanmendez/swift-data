@@ -8,12 +8,18 @@
 import SwiftData
 
 @MainActor
+let defaultPreviewNames = [
+    NameModel(name: "Ernesto", partySize: 10),
+    NameModel(name: "Carlos", partySize: 4)
+]
+
+@MainActor
 func modelPreviewContainer(
     autoSaveEnabled: Bool = true,
     names: [NameModel] = defaultPreviewNames,
 ) -> ModelContainer {
     let schema = Schema(
-        [OrderTicket.self, NameModel.self, RatingModel.self, OrderItem.self,]
+        [OrderTicket.self, NameModel.self, RatingModel.self, OrderItem.self ]
     )
 
     let configuration = ModelConfiguration(isStoredInMemoryOnly: true)

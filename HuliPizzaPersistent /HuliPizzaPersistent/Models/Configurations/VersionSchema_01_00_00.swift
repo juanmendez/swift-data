@@ -37,14 +37,14 @@ enum VersionSchema_01_00_00: VersionedSchema {
     @Model
     class OrderTicket: Identifiable {
 
-        //Model properties
+        // Model properties
         var ticketKey: Int
 
         @Relationship(deleteRule: .cascade)
         var items: [OrderItem]
         var name: String
 
-        //Computed Properties
+        // Computed Properties
         var totalPrice: Double {
             items.map { $0.extendedPrice }.reduce(0, +)
         }
@@ -52,7 +52,7 @@ enum VersionSchema_01_00_00: VersionedSchema {
             Int(items.map { $0.quantity }.reduce(0, +))
         }
 
-        //Initializer with defaults to make a blank version as necessary
+        // Initializer with defaults to make a blank version as necessary
         init(ticketKey: Int = -1, items: [OrderItem] = [], name: String = "") {
             self.ticketKey = ticketKey
             self.items = items
@@ -80,10 +80,10 @@ enum VersionSchema_01_00_00: VersionedSchema {
         @Transient
         var dateStamp: Date = Date()
 
-        //Computed Properties and functions
-        //The compute prices and extended prices
+        // Computed Properties and functions
+        // The compute prices and extended prices
 
-        ///Price calculated based on basic price and size properties .
+        /// Price calculated based on basic price and size properties .
         var price: Double {
             menuItem.basicPrice * (Double(size.rawValue) * 0.5 + 1)
         }

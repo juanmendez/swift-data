@@ -16,7 +16,7 @@ struct AllOrdersView: View {
         Text(
             orders
                 .map { $0.extendedPrice }
-                .reduce(0,+),
+                .reduce(0, +),
             format: .currency(code: "USD")
         )
 

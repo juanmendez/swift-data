@@ -11,13 +11,13 @@ import SwiftUI
 struct OrderListView: View {
     @Environment(\.modelContext) private var modelContext: ModelContext
 
-    //model
+    // model
     @Binding var ticketKey: Int
     // @Query var orderItems: [OrderItem]
     @Binding var orderItems: [OrderItem]
     @State private var currentOrder = OrderItem()
 
-    //navigation
+    // navigation
     @State private var isEditPresented = false
     @State private var isAddPresented = false
 
@@ -71,7 +71,7 @@ struct OrderListView: View {
             .opacity((isAddPresented || isEditPresented) ? 0 : 1)
         }
         .sheet(isPresented: $isEditPresented) {
-            //dismissal code here
+            // dismissal code here
         } content: {
             VStack {
                 OrderEditView(
@@ -84,7 +84,7 @@ struct OrderListView: View {
             }.padding()
         }
         .sheet(isPresented: $isAddPresented) {
-            //dismissal code here
+            // dismissal code here
         } content: {
             //            OrderAddView(
             //                size: $currentOrder.size,
@@ -115,7 +115,7 @@ struct OrderListView: View {
 @MainActor let testTicket = OrderTicket(
     ticketKey: 1,
     items: [
-        OrderItem(ticketKey: 1, rowKey: 1, menuItem: testitem1), OrderItem(ticketKey: 1, rowKey: 2, menuItem: testitem),
+        OrderItem(ticketKey: 1, rowKey: 1, menuItem: testitem1), OrderItem(ticketKey: 1, rowKey: 2, menuItem: testitem)
     ]
 )
 
